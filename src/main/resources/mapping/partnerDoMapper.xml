@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.dezhi.welfare.partner.dao.PartnerDoMapper">
+  <resultMap id="BaseResultMap" type="cn.dezhi.welfare.partner.entity.dataObject.PartnerDo">
+    <id column="partner_id" jdbcType="INTEGER" property="partnerId" />
+    <result column="partner_name" jdbcType="VARCHAR" property="partnerName" />
+    <result column="partner_pwd" jdbcType="VARCHAR" property="partnerPwd" />
+    <result column="reister_role" jdbcType="BIT" property="reisterRole" />
+    <result column="reigster_type" jdbcType="BIT" property="reigsterType" />
+    <result column="status" jdbcType="BIT" property="status" />
+    <result column="create_time" jdbcType="INTEGER" property="createTime" />
+    <result column="last_login_time" jdbcType="INTEGER" property="lastLoginTime" />
+    <result column="enterprise_name" jdbcType="VARCHAR" property="enterpriseName" />
+    <result column="business_license_num" jdbcType="VARCHAR" property="businessLicenseNum" />
+    <result column="legal_name" jdbcType="VARCHAR" property="legalName" />
+    <result column="legal_identity_no" jdbcType="VARCHAR" property="legalIdentityNo" />
+    <result column="enterprise_residence" jdbcType="VARCHAR" property="enterpriseResidence" />
+    <result column="contact" jdbcType="VARCHAR" property="contact" />
+    <result column="contact_phone" jdbcType="VARCHAR" property="contactPhone" />
+    <result column="contact_email" jdbcType="VARCHAR" property="contactEmail" />
+    <result column="deposit_bank" jdbcType="VARCHAR" property="depositBank" />
+    <result column="deposit_bank_account" jdbcType="VARCHAR" property="depositBankAccount" />
+    <result column="business_license_pic" jdbcType="VARCHAR" property="businessLicensePic" />
+    <result column="deposit_bank_permit_pic" jdbcType="VARCHAR" property="depositBankPermitPic" />
+    <result column="Qualification_certificate_pic" jdbcType="VARCHAR" property="qualificationCertificatePic" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    partner_id, partner_name, partner_pwd, reister_role, reigster_type, status, create_time, 
+    last_login_time, enterprise_name, business_license_num, legal_name, legal_identity_no, 
+    enterprise_residence, contact, contact_phone, contact_email, deposit_bank, deposit_bank_account, 
+    business_license_pic, deposit_bank_permit_pic, Qualification_certificate_pic
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from wel_partner
+    where partner_id = #{partnerId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from wel_partner
+    where partner_id = #{partnerId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="cn.dezhi.welfare.partner.entity.dataObject.PartnerDo">
+    insert into wel_partner (partner_id, partner_name, partner_pwd, 
+      reister_role, reigster_type, status, 
+      create_time, last_login_time, enterprise_name, 
+      business_license_num, legal_name, legal_identity_no, 
+      enterprise_residence, contact, contact_phone, 
+      contact_email, deposit_bank, deposit_bank_account, 
+      business_license_pic, deposit_bank_permit_pic, 
+      Qualification_certificate_pic)
+    values (#{partnerId,jdbcType=INTEGER}, #{partnerName,jdbcType=VARCHAR}, #{partnerPwd,jdbcType=VARCHAR}, 
+      #{reisterRole,jdbcType=BIT}, #{reigsterType,jdbcType=BIT}, #{status,jdbcType=BIT}, 
+      #{createTime,jdbcType=INTEGER}, #{lastLoginTime,jdbcType=INTEGER}, #{enterpriseName,jdbcType=VARCHAR}, 
+      #{businessLicenseNum,jdbcType=VARCHAR}, #{legalName,jdbcType=VARCHAR}, #{legalIdentityNo,jdbcType=VARCHAR}, 
+      #{enterpriseResidence,jdbcType=VARCHAR}, #{contact,jdbcType=VARCHAR}, #{contactPhone,jdbcType=VARCHAR},
+      #{contactEmail,jdbcType=VARCHAR}, #{depositBank,jdbcType=VARCHAR}, #{depositBankAccount,jdbcType=VARCHAR},
+      #{businessLicensePic,jdbcType=VARCHAR}, #{depositBankPermitPic,jdbcType=VARCHAR}, 
+      #{qualificationCertificatePic,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.dezhi.welfare.partner.entity.dataObject.PartnerDo" useGeneratedKeys="true" keyProperty="partnerId">
+    insert into wel_partner
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="partnerId != null">
+        partner_id,
+      </if>
+      <if test="partnerName != null">
+        partner_name,
+      </if>
+      <if test="partnerPwd != null">
+        partner_pwd,
+      </if>
+      <if test="reisterRole != null">
+        reister_role,
+      </if>
+      <if test="reigsterType != null">
+        reigster_type,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="lastLoginTime != null">
+        last_login_time,
+      </if>
+      <if test="enterpriseName != null">
+        enterprise_name,
+      </if>
+      <if test="businessLicenseNum != null">
+        business_license_num,
+      </if>
+      <if test="legalName != null">
+        legal_name,
+      </if>
+      <if test="legalIdentityNo != null">
+        legal_identity_no,
+      </if>
+      <if test="enterpriseResidence != null">
+        enterprise_residence,
+      </if>
+      <if test="contact != null">
+        contact,
+      </if>
+      <if test="contactPhone != null">
+        contact_phone,
+      </if>
+      <if test="contactEmail != null">
+        contact_email,
+      </if>
+      <if test="depositBank != null">
+        deposit_bank,
+      </if>
+      <if test="depositBankAccount != null">
+        deposit_bank_account,
+      </if>
+      <if test="businessLicensePic != null">
+        business_license_pic,
+      </if>
+      <if test="depositBankPermitPic != null">
+        deposit_bank_permit_pic,
+      </if>
+      <if test="qualificationCertificatePic != null">
+        Qualification_certificate_pic,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="partnerId != null">
+        #{partnerId,jdbcType=INTEGER},
+      </if>
+      <if test="partnerName != null">
+        #{partnerName,jdbcType=VARCHAR},
+      </if>
+      <if test="partnerPwd != null">
+        #{partnerPwd,jdbcType=VARCHAR},
+      </if>
+      <if test="reisterRole != null">
+        #{reisterRole,jdbcType=BIT},
+      </if>
+      <if test="reigsterType != null">
+        #{reigsterType,jdbcType=BIT},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=BIT},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=INTEGER},
+      </if>
+      <if test="lastLoginTime != null">
+        #{lastLoginTime,jdbcType=INTEGER},
+      </if>
+      <if test="enterpriseName != null">
+        #{enterpriseName,jdbcType=VARCHAR},
+      </if>
+      <if test="businessLicenseNum != null">
+        #{businessLicenseNum,jdbcType=VARCHAR},
+      </if>
+      <if test="legalName != null">
+        #{legalName,jdbcType=VARCHAR},
+      </if>
+      <if test="legalIdentityNo != null">
+        #{legalIdentityNo,jdbcType=VARCHAR},
+      </if>
+      <if test="enterpriseResidence != null">
+        #{enterpriseResidence,jdbcType=VARCHAR},
+      </if>
+      <if test="contact != null">
+        #{contact,jdbcType=VARCHAR},
+      </if>
+      <if test="contactPhone != null">
+        #{contactPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="contactEmail != null">
+        #{contactEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="depositBank != null">
+        #{depositBank,jdbcType=VARCHAR},
+      </if>
+      <if test="depositBankAccount != null">
+        #{depositBankAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="businessLicensePic != null">
+        #{businessLicensePic,jdbcType=VARCHAR},
+      </if>
+      <if test="depositBankPermitPic != null">
+        #{depositBankPermitPic,jdbcType=VARCHAR},
+      </if>
+      <if test="qualificationCertificatePic != null">
+        #{qualificationCertificatePic,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.dezhi.welfare.partner.entity.dataObject.PartnerDo">
+    update wel_partner
+    <set>
+      <if test="partnerName != null">
+        partner_name = #{partnerName,jdbcType=VARCHAR},
+      </if>
+      <if test="partnerPwd != null">
+        partner_pwd = #{partnerPwd,jdbcType=VARCHAR},
+      </if>
+      <if test="reisterRole != null">
+        reister_role = #{reisterRole,jdbcType=BIT},
+      </if>
+      <if test="reigsterType != null">
+        reigster_type = #{reigsterType,jdbcType=BIT},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=BIT},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=INTEGER},
+      </if>
+      <if test="lastLoginTime != null">
+        last_login_time = #{lastLoginTime,jdbcType=INTEGER},
+      </if>
+      <if test="enterpriseName != null">
+        enterprise_name = #{enterpriseName,jdbcType=VARCHAR},
+      </if>
+      <if test="businessLicenseNum != null">
+        business_license_num = #{businessLicenseNum,jdbcType=VARCHAR},
+      </if>
+      <if test="legalName != null">
+        legal_name = #{legalName,jdbcType=VARCHAR},
+      </if>
+      <if test="legalIdentityNo != null">
+        legal_identity_no = #{legalIdentityNo,jdbcType=VARCHAR},
+      </if>
+      <if test="enterpriseResidence != null">
+        enterprise_residence = #{enterpriseResidence,jdbcType=VARCHAR},
+      </if>
+      <if test="contact != null">
+        contact = #{contact,jdbcType=VARCHAR},
+      </if>
+      <if test="contactPhone != null">
+        contact_phone = #{contactPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="contactEmail != null">
+        contact_email = #{contactEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="depositBank != null">
+        deposit_bank = #{depositBank,jdbcType=VARCHAR},
+      </if>
+      <if test="depositBankAccount != null">
+        deposit_bank_account = #{depositBankAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="businessLicensePic != null">
+        business_license_pic = #{businessLicensePic,jdbcType=VARCHAR},
+      </if>
+      <if test="depositBankPermitPic != null">
+        deposit_bank_permit_pic = #{depositBankPermitPic,jdbcType=VARCHAR},
+      </if>
+      <if test="qualificationCertificatePic != null">
+        Qualification_certificate_pic = #{qualificationCertificatePic,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where partner_id = #{partnerId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.dezhi.welfare.partner.entity.dataObject.PartnerDo">
+    update wel_partner
+    set partner_name = #{partnerName,jdbcType=VARCHAR},
+      partner_pwd = #{partnerPwd,jdbcType=VARCHAR},
+      reister_role = #{reisterRole,jdbcType=BIT},
+      reigster_type = #{reigsterType,jdbcType=BIT},
+      status = #{status,jdbcType=BIT},
+      create_time = #{createTime,jdbcType=INTEGER},
+      last_login_time = #{lastLoginTime,jdbcType=INTEGER},
+      enterprise_name = #{enterpriseName,jdbcType=VARCHAR},
+      business_license_num = #{businessLicenseNum,jdbcType=VARCHAR},
+      legal_name = #{legalName,jdbcType=VARCHAR},
+      legal_identity_no = #{legalIdentityNo,jdbcType=VARCHAR},
+      enterprise_residence = #{enterpriseResidence,jdbcType=VARCHAR},
+      contact = #{contact,jdbcType=VARCHAR},
+      contact_phone = #{contactPhone,jdbcType=VARCHAR},
+      contact_email = #{contactEmail,jdbcType=VARCHAR},
+      deposit_bank = #{depositBank,jdbcType=VARCHAR},
+      deposit_bank_account = #{depositBankAccount,jdbcType=VARCHAR},
+      business_license_pic = #{businessLicensePic,jdbcType=VARCHAR},
+      deposit_bank_permit_pic = #{depositBankPermitPic,jdbcType=VARCHAR},
+      Qualification_certificate_pic = #{qualificationCertificatePic,jdbcType=VARCHAR}
+    where partner_id = #{partnerId,jdbcType=INTEGER}
+  </update>
+  <select id="selectPartnerByPartnerName" parameterType="java.lang.String" resultType="cn.dezhi.welfare.partner.entity.dataObject.PartnerDo">
+    select * from wel_partner where contact_email = #{email}
+  </select>
+</mapper>

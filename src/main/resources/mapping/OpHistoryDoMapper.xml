@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.dezhi.welfare.partner.dao.OpHistoryDoMapper">
+  <resultMap id="BaseResultMap" type="cn.dezhi.welfare.partner.entity.dataObject.OpHistoryDo">
+    <id column="history_id" jdbcType="INTEGER" property="historyId" />
+    <result column="history_type" jdbcType="BIT" property="historyType" />
+    <result column="history_name" jdbcType="VARCHAR" property="historyName" />
+    <result column="op_time" jdbcType="INTEGER" property="opTime" />
+    <result column="operator_id" jdbcType="INTEGER" property="operatorId" />
+    <result column="operator_type" jdbcType="VARCHAR" property="operatorType" />
+    <result column="op_details" jdbcType="VARCHAR" property="opDetails" />
+    <association property="partnerDo" select="selectPartnerOpHistoryId" column="operator_id" javaType="cn.dezhi.welfare.partner.entity.dataObject.PartnerDo"></association>
+  </resultMap>
+  <sql id="Base_Column_List">
+    history_id, history_type, history_name, op_time, operator_id, operator_type, op_details
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from wel_op_history
+    where history_id = #{historyId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from wel_op_history
+    where history_id = #{historyId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="cn.dezhi.welfare.partner.entity.dataObject.OpHistoryDo">
+    insert into wel_op_history (history_id, history_type, history_name, 
+      op_time, operator_id, operator_type, 
+      op_details)
+    values (#{historyId,jdbcType=INTEGER}, #{historyType,jdbcType=BIT}, #{historyName,jdbcType=VARCHAR}, 
+      #{opTime,jdbcType=INTEGER}, #{operatorId,jdbcType=INTEGER}, #{operatorType,jdbcType=VARCHAR}, 
+      #{opDetails,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.dezhi.welfare.partner.entity.dataObject.OpHistoryDo">
+    insert into wel_op_history
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="historyId != null">
+        history_id,
+      </if>
+      <if test="historyType != null">
+        history_type,
+      </if>
+      <if test="historyName != null">
+        history_name,
+      </if>
+      <if test="opTime != null">
+        op_time,
+      </if>
+      <if test="operatorId != null">
+        operator_id,
+      </if>
+      <if test="operatorType != null">
+        operator_type,
+      </if>
+      <if test="opDetails != null">
+        op_details,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="historyId != null">
+        #{historyId,jdbcType=INTEGER},
+      </if>
+      <if test="historyType != null">
+        #{historyType,jdbcType=BIT},
+      </if>
+      <if test="historyName != null">
+        #{historyName,jdbcType=VARCHAR},
+      </if>
+      <if test="opTime != null">
+        #{opTime,jdbcType=INTEGER},
+      </if>
+      <if test="operatorId != null">
+        #{operatorId,jdbcType=INTEGER},
+      </if>
+      <if test="operatorType != null">
+        #{operatorType,jdbcType=VARCHAR},
+      </if>
+      <if test="opDetails != null">
+        #{opDetails,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.dezhi.welfare.partner.entity.dataObject.OpHistoryDo">
+    update wel_op_history
+    <set>
+      <if test="historyType != null">
+        history_type = #{historyType,jdbcType=BIT},
+      </if>
+      <if test="historyName != null">
+        history_name = #{historyName,jdbcType=VARCHAR},
+      </if>
+      <if test="opTime != null">
+        op_time = #{opTime,jdbcType=INTEGER},
+      </if>
+      <if test="operatorId != null">
+        operator_id = #{operatorId,jdbcType=INTEGER},
+      </if>
+      <if test="operatorType != null">
+        operator_type = #{operatorType,jdbcType=VARCHAR},
+      </if>
+      <if test="opDetails != null">
+        op_details = #{opDetails,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where history_id = #{historyId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.dezhi.welfare.partner.entity.dataObject.OpHistoryDo">
+    update wel_op_history
+    set history_type = #{historyType,jdbcType=BIT},
+      history_name = #{historyName,jdbcType=VARCHAR},
+      op_time = #{opTime,jdbcType=INTEGER},
+      operator_id = #{operatorId,jdbcType=INTEGER},
+      operator_type = #{operatorType,jdbcType=VARCHAR},
+      op_details = #{opDetails,jdbcType=VARCHAR}
+    where history_id = #{historyId,jdbcType=INTEGER}
+  </update>
+  <select id="selectPartnerOpHistoryId" parameterType="java.lang.Integer" resultType="cn.dezhi.welfare.partner.entity.dataObject.PartnerDo">
+    select p.partner_name from wel_partner p,wel_op_history his
+    where p.partner_id = his.operator_id and his.history_id = #{historyId}
+  </select>
+  <select id="selectOpHistoryByPartnerId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select * from wel_op_history
+    where operator_id = #{partnerId} order by op_time desc limit 6
+  </select>
+</mapper>

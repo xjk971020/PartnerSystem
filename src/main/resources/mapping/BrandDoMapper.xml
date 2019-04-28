@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.dezhi.welfare.partner.dao.BrandDoMapper">
+  <resultMap id="BaseResultMap" type="cn.dezhi.welfare.partner.entity.dataObject.BrandDo">
+    <id column="brand_id" jdbcType="INTEGER" property="brandId" />
+    <result column="brand_name" jdbcType="VARCHAR" property="brandName" />
+    <result column="brand_pic" jdbcType="VARCHAR" property="brandPic" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    brand_id, brand_name, brand_pic
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from wel_goods_brand
+    where brand_id = #{brandId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from wel_goods_brand
+    where brand_id = #{brandId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="cn.dezhi.welfare.partner.entity.dataObject.BrandDo">
+    insert into wel_goods_brand (brand_id, brand_name, brand_pic
+      )
+    values (#{brandId,jdbcType=INTEGER}, #{brandName,jdbcType=VARCHAR}, #{brandPic,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="cn.dezhi.welfare.partner.entity.dataObject.BrandDo">
+    insert into wel_goods_brand
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="brandId != null">
+        brand_id,
+      </if>
+      <if test="brandName != null">
+        brand_name,
+      </if>
+      <if test="brandPic != null">
+        brand_pic,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="brandId != null">
+        #{brandId,jdbcType=INTEGER},
+      </if>
+      <if test="brandName != null">
+        #{brandName,jdbcType=VARCHAR},
+      </if>
+      <if test="brandPic != null">
+        #{brandPic,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.dezhi.welfare.partner.entity.dataObject.BrandDo">
+    update wel_goods_brand
+    <set>
+      <if test="brandName != null">
+        brand_name = #{brandName,jdbcType=VARCHAR},
+      </if>
+      <if test="brandPic != null">
+        brand_pic = #{brandPic,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where brand_id = #{brandId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.dezhi.welfare.partner.entity.dataObject.BrandDo">
+    update wel_goods_brand
+    set brand_name = #{brandName,jdbcType=VARCHAR},
+      brand_pic = #{brandPic,jdbcType=VARCHAR}
+    where brand_id = #{brandId,jdbcType=INTEGER}
+  </update>
+  <select id="selectBrandIdByBradnName" parameterType="java.lang.String" resultType="java.lang.Integer">
+    select brand_id from wel_goods_brand where brand_name = #{brandName}
+  </select>
+  <select id="selectBrandNameByBrandId" parameterType="java.lang.Integer" resultType="java.lang.String">
+    select brand_name from wel_goods_brand where brand_id = #{brandId}
+  </select>
+  <select id="selectAllBrand" resultType="cn.dezhi.welfare.partner.entity.dataObject.BrandDo">
+    select brand_name from wel_goods_brand
+  </select>
+</mapper>

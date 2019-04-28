@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>file</title>
+</head>
+<body>
+<form action="/partner/businessLicense" method="post" enctype="multipart/form-data">
+    <input type="file" name="businessLicensePic">
+    <input type="submit" value="上传">
+</form>
+<form action="/partner/mail" method="post" enctype="application/x-www-form-urlencoded">
+    <input type="text" name="mailAddress">
+    <input type="submit" value="上传">
+</form>
+<form action="http://192.168.1.198:8080/login" method="post">
+    <input type="text" name="mail">
+    <input type="text" name="password">
+    <input type="submit" value="提交">
+</form>
+<form action="http://192.168.1.198:8080/partner/password" method="post">
+    <input type="text" name="oldPwd">
+    <input type="text" name="newPwd">
+    <input type="submit" value="提交">
+</form>
+</body>
+</html>

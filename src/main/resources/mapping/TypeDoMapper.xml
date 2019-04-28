@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.dezhi.welfare.partner.dao.TypeDoMapper">
+  <resultMap id="BaseResultMap" type="cn.dezhi.welfare.partner.entity.dataObject.TypeDo">
+    <id column="type_id" jdbcType="INTEGER" property="typeId" />
+    <result column="type_name" jdbcType="VARCHAR" property="typeName" />
+    <result column="parent_id" jdbcType="INTEGER" property="parentId" />
+    <result column="level_id" jdbcType="BIT" property="levelId" />
+    <result column="sort" jdbcType="INTEGER" property="sort" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    type_id, type_name, parent_id, level_id, sort
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from wel_goods_type
+    where type_id = #{typeId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from wel_goods_type
+    where type_id = #{typeId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="cn.dezhi.welfare.partner.entity.dataObject.TypeDo">
+    insert into wel_goods_type (type_id, type_name, parent_id, 
+      level_id, sort)
+    values (#{typeId,jdbcType=INTEGER}, #{typeName,jdbcType=VARCHAR}, #{parentId,jdbcType=INTEGER}, 
+      #{levelId,jdbcType=BIT}, #{sort,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.dezhi.welfare.partner.entity.dataObject.TypeDo">
+    insert into wel_goods_type
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="typeId != null">
+        type_id,
+      </if>
+      <if test="typeName != null">
+        type_name,
+      </if>
+      <if test="parentId != null">
+        parent_id,
+      </if>
+      <if test="levelId != null">
+        level_id,
+      </if>
+      <if test="sort != null">
+        sort,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="typeId != null">
+        #{typeId,jdbcType=INTEGER},
+      </if>
+      <if test="typeName != null">
+        #{typeName,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null">
+        #{parentId,jdbcType=INTEGER},
+      </if>
+      <if test="levelId != null">
+        #{levelId,jdbcType=BIT},
+      </if>
+      <if test="sort != null">
+        #{sort,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.dezhi.welfare.partner.entity.dataObject.TypeDo">
+    update wel_goods_type
+    <set>
+      <if test="typeName != null">
+        type_name = #{typeName,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null">
+        parent_id = #{parentId,jdbcType=INTEGER},
+      </if>
+      <if test="levelId != null">
+        level_id = #{levelId,jdbcType=BIT},
+      </if>
+      <if test="sort != null">
+        sort = #{sort,jdbcType=INTEGER},
+      </if>
+    </set>
+    where type_id = #{typeId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.dezhi.welfare.partner.entity.dataObject.TypeDo">
+    update wel_goods_type
+    set type_name = #{typeName,jdbcType=VARCHAR},
+      parent_id = #{parentId,jdbcType=INTEGER},
+      level_id = #{levelId,jdbcType=BIT},
+      sort = #{sort,jdbcType=INTEGER}
+    where type_id = #{typeId,jdbcType=INTEGER}
+  </update>
+  <select id="selectTypeIdByTypeName" parameterType="java.lang.String" resultType="java.lang.Integer">
+    select  type_id from wel_goods_type where type_name = #{typeName}
+  </select>
+  <select id="selectTypeNameByTypeId" parameterType="java.lang.Integer" resultType="java.lang.String">
+    select type_name from wel_goods_type where type_id = #{typeId}
+  </select>
+  <select id="selectAllType" resultType="cn.dezhi.welfare.partner.entity.dataObject.TypeDo">
+    select type_name from wel_goods_type
+  </select>
+</mapper>

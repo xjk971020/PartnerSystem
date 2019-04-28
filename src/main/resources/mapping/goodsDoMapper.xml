@@ -1,0 +1,375 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.dezhi.welfare.partner.dao.GoodsDoMapper">
+  <resultMap id="BaseResultMap" type="cn.dezhi.welfare.partner.entity.dataObject.GoodsDo">
+    <id column="goods_id" jdbcType="INTEGER" property="goodsId" />
+    <result column="goods_name" jdbcType="VARCHAR" property="goodsName" />
+    <result column="goods_attr" jdbcType="VARCHAR" property="goodsAttr" />
+    <result column="goods_barcode" jdbcType="VARCHAR" property="goodsBarcode" />
+    <result column="type_id" jdbcType="INTEGER" property="typeId" />
+    <result column="brand_id" jdbcType="INTEGER" property="brandId" />
+    <result column="check_status" jdbcType="BIT" property="checkStatus" />
+    <result column="shelf_status" jdbcType="BIT" property="shelfStatus" />
+    <result column="add_time" jdbcType="INTEGER" property="addTime" />
+    <result column="goods_pic" jdbcType="VARCHAR" property="goodsPic" />
+    <result column="goods_sku" jdbcType="VARCHAR" property="goodsSku" />
+    <result column="supplier_sku" jdbcType="VARCHAR" property="supplierSku" />
+    <result column="short_name" jdbcType="VARCHAR" property="shortName" />
+    <result column="net_weight" jdbcType="DECIMAL" property="netWeight" />
+    <result column="gross_weight" jdbcType="DECIMAL" property="grossWeight" />
+    <result column="short_description" jdbcType="VARCHAR" property="shortDescription" />
+    <result column="big_pic" jdbcType="VARCHAR" property="bigPic" />
+    <result column="goods_price" jdbcType="DECIMAL" property="goodsPrice" />
+    <result column="goods_channel" jdbcType="VARCHAR" property="goodsChannel" />
+    <result column="score" jdbcType="DECIMAL" property="score" />
+    <result column="goods_link" jdbcType="VARCHAR" property="goodsLink" />
+    <association property="brandDo" select="selectBrandByGoodsId" column="brand_id" javaType="cn.dezhi.welfare.partner.entity.dataObject.BrandDo"></association>
+    <association property="typeDo" select="selectTypeByGoodsId" column="type_id" javaType="cn.dezhi.welfare.partner.entity.dataObject.TypeDo"></association>
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="cn.dezhi.welfare.partner.entity.dataObject.GoodsDo">
+    <result column="goods_description" jdbcType="LONGVARCHAR" property="goodsDescription" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    goods_id, goods_name, goods_attr, goods_barcode, type_id, brand_id, check_status, 
+    shelf_status, add_time, goods_pic, goods_sku, supplier_sku, short_name, net_weight, 
+    gross_weight, short_description, big_pic, goods_price, goods_channel, score, goods_link
+  </sql>
+  <sql id="Blob_Column_List">
+    goods_description
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from wel_goods
+    where goods_id = #{goodsId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from wel_goods
+    where goods_id = #{goodsId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="cn.dezhi.welfare.partner.entity.dataObject.GoodsDo">
+    insert into wel_goods (goods_id, goods_name, goods_attr, 
+      goods_barcode, type_id, brand_id, 
+      check_status, shelf_status, add_time, 
+      goods_pic, goods_sku, supplier_sku, 
+      short_name, net_weight, gross_weight, 
+      short_description, big_pic, goods_price, 
+      goods_channel, score, goods_link, 
+      goods_description)
+    values (#{goodsId,jdbcType=INTEGER}, #{goodsName,jdbcType=VARCHAR}, #{goodsAttr,jdbcType=VARCHAR}, 
+      #{goodsBarcode,jdbcType=VARCHAR}, #{typeId,jdbcType=INTEGER}, #{brandId,jdbcType=INTEGER}, 
+      #{checkStatus,jdbcType=BIT}, #{shelfStatus,jdbcType=BIT}, #{addTime,jdbcType=INTEGER}, 
+      #{goodsPic,jdbcType=VARCHAR}, #{goodsSku,jdbcType=VARCHAR}, #{supplierSku,jdbcType=VARCHAR}, 
+      #{shortName,jdbcType=VARCHAR}, #{netWeight,jdbcType=DECIMAL}, #{grossWeight,jdbcType=DECIMAL}, 
+      #{shortDescription,jdbcType=VARCHAR}, #{bigPic,jdbcType=VARCHAR}, #{goodsPrice,jdbcType=DECIMAL}, 
+      #{goodsChannel,jdbcType=VARCHAR}, #{score,jdbcType=DECIMAL}, #{goodsLink,jdbcType=VARCHAR}, 
+      #{goodsDescription,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.dezhi.welfare.partner.entity.dataObject.GoodsDo" useGeneratedKeys="true" keyColumn="goodsId">
+    insert into wel_goods
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="goodsId != null">
+        goods_id,
+      </if>
+      <if test="goodsName != null">
+        goods_name,
+      </if>
+      <if test="goodsAttr != null">
+        goods_attr,
+      </if>
+      <if test="goodsBarcode != null">
+        goods_barcode,
+      </if>
+      <if test="typeId != null">
+        type_id,
+      </if>
+      <if test="brandId != null">
+        brand_id,
+      </if>
+      <if test="checkStatus != null">
+        check_status,
+      </if>
+      <if test="shelfStatus != null">
+        shelf_status,
+      </if>
+      <if test="addTime != null">
+        add_time,
+      </if>
+      <if test="goodsPic != null">
+        goods_pic,
+      </if>
+      <if test="goodsSku != null">
+        goods_sku,
+      </if>
+      <if test="supplierSku != null">
+        supplier_sku,
+      </if>
+      <if test="shortName != null">
+        short_name,
+      </if>
+      <if test="netWeight != null">
+        net_weight,
+      </if>
+      <if test="grossWeight != null">
+        gross_weight,
+      </if>
+      <if test="shortDescription != null">
+        short_description,
+      </if>
+      <if test="bigPic != null">
+        big_pic,
+      </if>
+      <if test="goodsPrice != null">
+        goods_price,
+      </if>
+      <if test="goodsChannel != null">
+        goods_channel,
+      </if>
+      <if test="score != null">
+        score,
+      </if>
+      <if test="goodsLink != null">
+        goods_link,
+      </if>
+      <if test="goodsDescription != null">
+        goods_description,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="goodsId != null">
+        #{goodsId,jdbcType=INTEGER},
+      </if>
+      <if test="goodsName != null">
+        #{goodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsAttr != null">
+        #{goodsAttr,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsBarcode != null">
+        #{goodsBarcode,jdbcType=VARCHAR},
+      </if>
+      <if test="typeId != null">
+        #{typeId,jdbcType=INTEGER},
+      </if>
+      <if test="brandId != null">
+        #{brandId,jdbcType=INTEGER},
+      </if>
+      <if test="checkStatus != null">
+        #{checkStatus,jdbcType=BIT},
+      </if>
+      <if test="shelfStatus != null">
+        #{shelfStatus,jdbcType=BIT},
+      </if>
+      <if test="addTime != null">
+        #{addTime,jdbcType=INTEGER},
+      </if>
+      <if test="goodsPic != null">
+        #{goodsPic,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsSku != null">
+        #{goodsSku,jdbcType=VARCHAR},
+      </if>
+      <if test="supplierSku != null">
+        #{supplierSku,jdbcType=VARCHAR},
+      </if>
+      <if test="shortName != null">
+        #{shortName,jdbcType=VARCHAR},
+      </if>
+      <if test="netWeight != null">
+        #{netWeight,jdbcType=DECIMAL},
+      </if>
+      <if test="grossWeight != null">
+        #{grossWeight,jdbcType=DECIMAL},
+      </if>
+      <if test="shortDescription != null">
+        #{shortDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="bigPic != null">
+        #{bigPic,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsPrice != null">
+        #{goodsPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="goodsChannel != null">
+        #{goodsChannel,jdbcType=VARCHAR},
+      </if>
+      <if test="score != null">
+        #{score,jdbcType=DECIMAL},
+      </if>
+      <if test="goodsLink != null">
+        #{goodsLink,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsDescription != null">
+        #{goodsDescription,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.dezhi.welfare.partner.entity.dataObject.GoodsDo">
+    update wel_goods
+    <set>
+      <if test="goodsName != null">
+        goods_name = #{goodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsAttr != null">
+        goods_attr = #{goodsAttr,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsBarcode != null">
+        goods_barcode = #{goodsBarcode,jdbcType=VARCHAR},
+      </if>
+      <if test="typeId != null">
+        type_id = #{typeId,jdbcType=INTEGER},
+      </if>
+      <if test="brandId != null">
+        brand_id = #{brandId,jdbcType=INTEGER},
+      </if>
+      <if test="checkStatus != null">
+        check_status = #{checkStatus,jdbcType=BIT},
+      </if>
+      <if test="shelfStatus != null">
+        shelf_status = #{shelfStatus,jdbcType=BIT},
+      </if>
+      <if test="addTime != null">
+        add_time = #{addTime,jdbcType=INTEGER},
+      </if>
+      <if test="goodsPic != null">
+        goods_pic = #{goodsPic,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsSku != null">
+        goods_sku = #{goodsSku,jdbcType=VARCHAR},
+      </if>
+      <if test="supplierSku != null">
+        supplier_sku = #{supplierSku,jdbcType=VARCHAR},
+      </if>
+      <if test="shortName != null">
+        short_name = #{shortName,jdbcType=VARCHAR},
+      </if>
+      <if test="netWeight != null">
+        net_weight = #{netWeight,jdbcType=DECIMAL},
+      </if>
+      <if test="grossWeight != null">
+        gross_weight = #{grossWeight,jdbcType=DECIMAL},
+      </if>
+      <if test="shortDescription != null">
+        short_description = #{shortDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="bigPic != null">
+        big_pic = #{bigPic,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsPrice != null">
+        goods_price = #{goodsPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="goodsChannel != null">
+        goods_channel = #{goodsChannel,jdbcType=VARCHAR},
+      </if>
+      <if test="score != null">
+        score = #{score,jdbcType=DECIMAL},
+      </if>
+      <if test="goodsLink != null">
+        goods_link = #{goodsLink,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsDescription != null">
+        goods_description = #{goodsDescription,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where goods_id = #{goodsId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="cn.dezhi.welfare.partner.entity.dataObject.GoodsDo">
+    update wel_goods
+    set goods_name = #{goodsName,jdbcType=VARCHAR},
+      goods_attr = #{goodsAttr,jdbcType=VARCHAR},
+      goods_barcode = #{goodsBarcode,jdbcType=VARCHAR},
+      type_id = #{typeId,jdbcType=INTEGER},
+      brand_id = #{brandId,jdbcType=INTEGER},
+      check_status = #{checkStatus,jdbcType=BIT},
+      shelf_status = #{shelfStatus,jdbcType=BIT},
+      add_time = #{addTime,jdbcType=INTEGER},
+      goods_pic = #{goodsPic,jdbcType=VARCHAR},
+      goods_sku = #{goodsSku,jdbcType=VARCHAR},
+      supplier_sku = #{supplierSku,jdbcType=VARCHAR},
+      short_name = #{shortName,jdbcType=VARCHAR},
+      net_weight = #{netWeight,jdbcType=DECIMAL},
+      gross_weight = #{grossWeight,jdbcType=DECIMAL},
+      short_description = #{shortDescription,jdbcType=VARCHAR},
+      big_pic = #{bigPic,jdbcType=VARCHAR},
+      goods_price = #{goodsPrice,jdbcType=DECIMAL},
+      goods_channel = #{goodsChannel,jdbcType=VARCHAR},
+      score = #{score,jdbcType=DECIMAL},
+      goods_link = #{goodsLink,jdbcType=VARCHAR},
+      goods_description = #{goodsDescription,jdbcType=LONGVARCHAR}
+    where goods_id = #{goodsId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.dezhi.welfare.partner.entity.dataObject.GoodsDo">
+    update wel_goods
+    set goods_name = #{goodsName,jdbcType=VARCHAR},
+      goods_attr = #{goodsAttr,jdbcType=VARCHAR},
+      goods_barcode = #{goodsBarcode,jdbcType=VARCHAR},
+      type_id = #{typeId,jdbcType=INTEGER},
+      brand_id = #{brandId,jdbcType=INTEGER},
+      check_status = #{checkStatus,jdbcType=BIT},
+      shelf_status = #{shelfStatus,jdbcType=BIT},
+      add_time = #{addTime,jdbcType=INTEGER},
+      goods_pic = #{goodsPic,jdbcType=VARCHAR},
+      goods_sku = #{goodsSku,jdbcType=VARCHAR},
+      supplier_sku = #{supplierSku,jdbcType=VARCHAR},
+      short_name = #{shortName,jdbcType=VARCHAR},
+      net_weight = #{netWeight,jdbcType=DECIMAL},
+      gross_weight = #{grossWeight,jdbcType=DECIMAL},
+      short_description = #{shortDescription,jdbcType=VARCHAR},
+      big_pic = #{bigPic,jdbcType=VARCHAR},
+      goods_price = #{goodsPrice,jdbcType=DECIMAL},
+      goods_channel = #{goodsChannel,jdbcType=VARCHAR},
+      score = #{score,jdbcType=DECIMAL},
+      goods_link = #{goodsLink,jdbcType=VARCHAR}
+    where goods_id = #{goodsId,jdbcType=INTEGER}
+  </update>
+
+  <select id="selectBrandByGoodsId" parameterType="java.lang.Integer" resultType="cn.dezhi.welfare.partner.entity.dataObject.BrandDo">
+    select brand.brand_id, brand.brand_name from wel_goods_brand brand ,wel_goods good
+    where brand.brand_id = good.brand_id and good.goods_id = #{good_id}
+  </select>
+  <select id="selectTypeByGoodsId" parameterType="java.lang.Integer" resultType="cn.dezhi.welfare.partner.entity.dataObject.TypeDo">
+    select type.type_id,type.type_name from wel_goods_type type,wel_goods good
+    where type.type_id = good.goods_id and good.goods_id = #{good_id}
+  </select>
+  <select id="getGoodsCount" resultType="java.util.Map">
+      select count(*) as countAll,count(if(check_status like '0',check_status,null)) as countNotVerify,
+            count(if(check_status like '1',check_status,null)) as countPass, count(if(check_status like '2',check_status,null)) as countNotPass
+            from wel_goods
+  </select>
+  <select id="getAllGoods" resultMap="BaseResultMap">
+    select * from wel_goods order by add_time desc
+  </select>
+  <select id="selectGoodsByType" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select goods.*, type.* from wel_goods goods,wel_goods_type type
+    where goods.type_id = type.type_id and type.type_name = #{typeName}
+  </select>
+  <select id="selectGoodsByBrand" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select goods.*,brand.* from wel_goods goods,wel_goods_brand brand
+    where goods.brand_id = brand.brand_id and brand.brand_name = #{brandName}
+  </select>
+  <select id="selectGoodsByCheckStatus" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+    select * from wel_goods where check_status = #{checkStatus}
+  </select>
+  <select id="selectGoodsByShelfStatus" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+    select * from wel_goods where shelf_status = #{shelfStatus}
+  </select>
+   <select id="selectGoodsByBarcode" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select * from wel_goods where goods_barcode = #{goodsBarcode}
+  </select>
+    <delete id="deleteByManyId" >
+        delete from wel_goods
+        where goods_id in 
+        <foreach collection="array" item="goodsId" open="(" separator="," close=")">
+            #{goodsId}
+        </foreach>
+    </delete>
+    <update id="updateShelfStatusForMany" parameterType="java.util.HashMap">
+        update wel_goods set shelf_status = #{shelfStatus}
+        where goods_id in
+        <foreach collection="ids" item="goodsId" open="(" separator="," close=")">
+            #{goodsId}
+        </foreach>
+    </update>
+</mapper>
