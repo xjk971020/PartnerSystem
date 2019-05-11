@@ -10,6 +10,8 @@ import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.common.SolrDocument;
 import org.apache.solr.common.SolrDocumentList;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.solr.core.query.Criteria;
 import org.springframework.data.solr.core.query.HighlightOptions;
@@ -30,6 +32,8 @@ import java.util.Map;
  **/
 @Service
 public class SolrService {
+
+    private static Logger logger = LoggerFactory.getLogger(SolrService.class);
 
     @Autowired
     private SolrClient solrClient;
@@ -56,7 +60,7 @@ public class SolrService {
         //设置高亮选项
         query.setParam("hl", "true");
         query.setParam("hl.fl", lightNames);
-        query.setHighlightSimplePre("<em  style='color: red'>");
+        query.setHighlightSimplePre("<em style='color: red'>");
         query.setHighlightSimplePost("</em>");
 
         if (size <= 0 || size == null) {
@@ -64,7 +68,7 @@ public class SolrService {
         }
         //默认第一页
         if (current <= 1 || current == null) {
-            current = 1;
+            current = 0;
         } else {
             current = (current - 1) * size;
         }
@@ -87,7 +91,11 @@ public class SolrService {
             Map<String, Map<String, List<String>>> highlighting = response.getHighlighting();
             //获取匹配结果
             SolrDocumentList documents = response.getResults();
+
             long numFound = documents.getNumFound();
+            if (documents == null) {
+                logger.info(documents.toString());
+            }
             //获取匹配的数据个数
             if (numFound != 0) {
                 List<Object> entityList = new ArrayList<>();
@@ -101,16 +109,15 @@ public class SolrService {
                             document.setField(lightNames[i], listMap.get(lightNames[i]).get(0));
                         }
                     }
-                    Map<String, Object> fieldMap = new HashMap<>();
+                    Map<String, Object> fieldMap = new HashMap<>(10);
                     for (int i = 0; i < fields.length; i++) {
                         fieldMap.put(fields[i], String.valueOf(document.getFieldValue(fields[i])));
                     }
                     entityList.add(fieldMap);
                 }
-                Map<String,Object> data = new HashMap<>();
+                Map<String,Object> data = new HashMap<>(5);
                 data.put("size",numFound);
-//                data.put("data",entityList);
-                data.put("data",highlighting);
+                data.put("data",entityList);
                 return CommonReturnType.create(data);
             } else {
                 return CommonReturnType.create("未搜索到任何结果");

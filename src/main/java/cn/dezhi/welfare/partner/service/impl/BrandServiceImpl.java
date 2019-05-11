@@ -31,7 +31,6 @@ public class BrandServiceImpl implements IBrandService {
 
     @Override
     public List<BrandDo> selectAllBrand() {
-        List<BrandDo> brandDos = brandDoMapper.selectAllBrand();
-        return brandDos;
+        return brandDoMapper.selectAllBrand();
     }
 }

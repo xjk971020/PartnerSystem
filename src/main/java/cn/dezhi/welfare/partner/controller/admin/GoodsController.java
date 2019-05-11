@@ -11,6 +11,7 @@ import cn.dezhi.welfare.partner.response.error.BussinessException;
 import cn.dezhi.welfare.partner.service.IBrandService;
 import cn.dezhi.welfare.partner.service.IGoodsService;
 import cn.dezhi.welfare.partner.service.ITypeService;
+import cn.dezhi.welfare.partner.service.impl.SolrService;
 import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
@@ -43,6 +44,9 @@ public class GoodsController extends AbstractController {
 
     @Autowired
     private ITypeService typeService;
+
+    @Autowired
+    private SolrService solrService;
 
     @ApiOperation(notes = "获取首页信息",value = "首页")
     @GetMapping("/index")
@@ -123,7 +127,7 @@ public class GoodsController extends AbstractController {
     }
 
     @ApiOperation(value = "获取分页所需要的商品信息以及分类和品牌信息")
-    @GetMapping("all")
+    @GetMapping("/all")
     public CommonReturnType getPageGoods(@RequestParam(value = "curPage",defaultValue = "1",required = false)int curPage,
                                             @RequestParam(value = "size",defaultValue = "10",required = false)int size) {
         PageInfo<GoodsVo> pageInfo = goodsService.getGoodsByPage(curPage,size);
@@ -137,16 +141,24 @@ public class GoodsController extends AbstractController {
     }
 
     @ApiOperation(value = "批量删除商品")
-    @DeleteMapping("deleteMany")
+    @DeleteMapping("/deleteMany")
     public CommonReturnType deleteGoodsMany(@RequestParam("ids")int[] goodIds,HttpServletRequest request) {
         return goodsService.deleteByManyId(goodIds,this.getPartner(request).getPartnerId());
     }
 
     @ApiOperation(value = "批量修改商品上下架的状态")
-    @PostMapping("updateShelfStatusFoeMany")
+    @PostMapping("/updateShelfStatusFoeMany")
     public CommonReturnType updateShelfStatusForMany(@RequestParam("ids")int[] goodIds,
                                                           @RequestParam("shelfStatus") String shelfStatus,
                                                             HttpServletRequest request) {
         return goodsService.updateShelfStatusForMany(goodIds,shelfStatus,this.getPartner(request).getPartnerId());
+    }
+
+    @ApiOperation("使用solr进行全文搜索")
+    @PostMapping("/search")
+    public CommonReturnType solrSearch(@RequestParam("keyword")String keyword,
+                                       @RequestParam(value = "current",defaultValue = "0",required = false) Integer current,
+                                       @RequestParam(value = "size",defaultValue = "10",required = false) Integer size) {
+        return solrService.searchGoods(keyword,current,size);
     }
 }
